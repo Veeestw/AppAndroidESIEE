@@ -12,6 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Projet_Android_ESIEE">
         <activity
+            android:name=".Note"
+            android:exported="false" />
+        <activity
+            android:name=".AddNoteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Screen_NoteBloc"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
