@@ -4,15 +4,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.appcompat.app.AppCompatActivity;import com.google.android.material.button.MaterialButton;
+import java.util.UUID;
 import io.realm.Realm;
 
-import com.google.android.material.button.MaterialButton;
-
 public class AddNoteActivity extends AppCompatActivity {
-
+    private Realm realm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,9 +19,7 @@ public class AddNoteActivity extends AppCompatActivity {
         EditText descriptionInput = findViewById(R.id.DescriptionInput);
         MaterialButton saveBtn = findViewById(R.id.SaveBtn);
 
-        Realm.init(getApplicationContext());
-        Realm realm = Realm.getDefaultInstance();
-
+        realm = Realm.getDefaultInstance();
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,16 +28,26 @@ public class AddNoteActivity extends AppCompatActivity {
                 String description = descriptionInput.getText().toString();
                 long createdTime = System.currentTimeMillis();
 
-                realm.beginTransaction();
-                Note note = realm.createObject(Note.class);
-                note.setTitle(title);
-                note.setDescription(description);
-                note.setCreatedTime(createdTime);
-                realm.commitTransaction();
-                Toast.makeText(AddNoteActivity.this, "Note ajoutée avec succès", Toast.LENGTH_SHORT).show();
-                finish();
+                if (!realm.isClosed()) {
+                    realm.executeTransaction(r -> {
+                        String newId = UUID.randomUUID().toString();
+                        Note note = r.createObject(Note.class, newId);
+                        note.setTitle(title);
+                        note.setDescription(description);
+                        note.setCreatedTime(createdTime);
+                    });
+                    Toast.makeText(AddNoteActivity.this, "Note ajoutée avec succès", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
         });
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (realm != null) {
+            realm.close();
+        }
     }
 }
