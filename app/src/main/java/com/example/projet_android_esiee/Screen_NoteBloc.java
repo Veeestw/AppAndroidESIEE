@@ -25,6 +25,7 @@ public class Screen_NoteBloc extends AppCompatActivity {
         setContentView(R.layout.activity_screen_note_bloc);
 
         MaterialButton addNoteBtn = findViewById(R.id.addnewbtn);
+        MaterialButton retourBtn = findViewById(R.id.RetourcalculatriceBTN);
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
 
         realm = Realm.getDefaultInstance();
@@ -32,7 +33,7 @@ public class Screen_NoteBloc extends AppCompatActivity {
         notesList = realm.where(Note.class).sort("createdTime", Sort.DESCENDING).findAll();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        myAdapter = new MyAdapter(getApplicationContext(), notesList);
+        myAdapter = new MyAdapter(this, notesList);
         recyclerView.setAdapter(myAdapter);
 
         realmChangeListener = new RealmChangeListener<RealmResults<Note>>() {
@@ -50,6 +51,13 @@ public class Screen_NoteBloc extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Screen_NoteBloc.this, AddNoteActivity.class));
+            }
+        });
+
+        retourBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                finish();
             }
         });
     }

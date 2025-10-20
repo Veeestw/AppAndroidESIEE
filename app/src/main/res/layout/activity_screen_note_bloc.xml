@@ -16,8 +16,19 @@
         android:id="@+id/Notetitle"
         android:text="NOTES"
         android:textSize="20sp"
+        android:layout_margin="3dp"
         android:textColor="@color/black"
         android:textStyle="bold" />
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:text="Retour"
+        android:layout_margin="5dp"
+        android:layout_alignParentRight="true"
+        android:id="@+id/RetourcalculatriceBTN"
+        android:backgroundTint="#7C7E79"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

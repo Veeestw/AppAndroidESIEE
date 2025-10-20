@@ -18,6 +18,7 @@ public class AddNoteActivity extends AppCompatActivity {
         EditText titleInput = findViewById(R.id.TitleInput);
         EditText descriptionInput = findViewById(R.id.DescriptionInput);
         MaterialButton saveBtn = findViewById(R.id.SaveBtn);
+        MaterialButton retourBtn = findViewById(R.id.RetourAddToNoteBTN);
 
         realm = Realm.getDefaultInstance();
 
@@ -41,6 +42,14 @@ public class AddNoteActivity extends AppCompatActivity {
                 }
             }
         });
+
+        retourBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                finish();
+            }
+        });
+
     }
 
     @Override

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/white"
-    tools:context=".AddNoteActivity">
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:background="@color/white"
+tools:context=".EditNoteActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/TitleTextView"
-        android:text="Ajout d'une nouvelle note"
+        android:text="Modifier une note"
         android:textColor="@color/black"
         android:textSize="25sp"
         android:gravity="center"
@@ -24,15 +24,15 @@
         android:text="Retour"
         android:layout_margin="5dp"
         android:layout_gravity="center"
-        android:id="@+id/RetourAddToNoteBTN"
+        android:id="@+id/RetourEditToNoteBTN"
         android:backgroundTint="@color/black"
         />
     <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sauvegarder la note"
+        android:text="Modifier la note"
         android:layout_gravity="center"
-        android:id="@+id/SaveBtn"
+        android:id="@+id/update_note_btn"
         android:backgroundTint="@color/black"/>
 
     <LinearLayout
@@ -45,7 +45,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/TitleInput"
+            android:id="@+id/edit_title_input"
             android:hint="Title"
             android:background="#D9D2D2"
             android:padding="10dp"
@@ -55,14 +55,11 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/DescriptionInput"
+            android:id="@+id/edit_description_input"
             android:hint="Description"
             android:background="#D9D2D2"
             android:padding="10dp"
             android:layout_margin="10dp"/>
-
     </LinearLayout>
-
-
 
 </LinearLayout>

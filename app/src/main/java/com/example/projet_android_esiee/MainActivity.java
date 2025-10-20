@@ -81,8 +81,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         else if(buttonText.equals("=")){
-            startActivity(new Intent(MainActivity.this, Screen_NoteBloc.class));
-            //afficheurCalcul.setText(afficheurResultat.getText());
+            afficheurCalcul.setText(afficheurResultat.getText());
+            if(DonneesCalcul.equals("333")){
+                startActivity(new Intent(MainActivity.this, Screen_NoteBloc.class));
+            }
             return;
         }
 
@@ -104,6 +106,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             context.setOptimizationLevel(-1);
             Scriptable scriptable = context.initStandardObjects();
             String donnee_final = donnee.replaceAll("(?<=[\\+\\-\\*\\/\\(\\s]|^)0+(?=[1-9])", "");
+
+            if (donnee_final.startsWith("00")) {
+                donnee_final = donnee_final.substring(2);
+            }
+
+            if(donnee_final.isEmpty()){
+                donnee_final = "0";
+            }
+
             if (donnee_final.startsWith(".")) {
                 donnee_final = "0" + donnee_final;
             }
