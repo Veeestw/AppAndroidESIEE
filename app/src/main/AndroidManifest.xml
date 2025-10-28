@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Projet_Android_ESIEE">
         <activity
+            android:name=".Screen_Parametres"
+            android:exported="false" />
+        <activity
             android:name=".EditNoteActivity"
             android:exported="false" />
         <activity

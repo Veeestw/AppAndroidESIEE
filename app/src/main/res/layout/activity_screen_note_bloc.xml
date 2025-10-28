@@ -29,11 +29,21 @@
         android:id="@+id/RetourcalculatriceBTN"
         android:backgroundTint="#7C7E79"
         />
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:text="Parametres"
+        android:layout_margin="10dp"
+        android:layout_toRightOf="@id/Notetitle"
+        android:id="@+id/ParametresBTN"
+        android:backgroundTint="#7C7E79"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recyclerview"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/Notetitle"/>
 
     <com.google.android.material.button.MaterialButton

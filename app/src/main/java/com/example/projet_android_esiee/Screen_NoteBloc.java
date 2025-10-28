@@ -26,6 +26,7 @@ public class Screen_NoteBloc extends AppCompatActivity {
 
         MaterialButton addNoteBtn = findViewById(R.id.addnewbtn);
         MaterialButton retourBtn = findViewById(R.id.RetourcalculatriceBTN);
+        MaterialButton ParametresBtn = findViewById(R.id.ParametresBTN);
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
 
         realm = Realm.getDefaultInstance();
@@ -51,6 +52,13 @@ public class Screen_NoteBloc extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Screen_NoteBloc.this, AddNoteActivity.class));
+            }
+        });
+
+        ParametresBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Screen_NoteBloc.this, Screen_Parametres.class));
             }
         });
 
