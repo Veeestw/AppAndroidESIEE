@@ -25,20 +25,13 @@ import java.security.GeneralSecurityException;
 import android.util.Log;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class PasswordModif extends AppCompatActivity implements View.OnClickListener{
 
     TextView afficheurCalcul,afficheurResultat;
     MaterialButton button7,button8,button9,button4,button5,button6,button1,button2,button3,button0;
     MaterialButton buttonDiv,buttonMult,buttonSous,buttonAdd,buttonPoint;
     MaterialButton buttonC,buttonParentheseG,buttonParentheseD,buttonRetour,buttonEgal;
 
-    private Handler longPressHandler = new Handler();
-    private Runnable longPressRunnable = new Runnable() {
-        @Override
-        public void run() {
-            showSecretQuestionDialog();
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,61 +68,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    private void showSecretQuestionDialog() {
-        // 1. Création de la base de la boîte de dialogue
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("| Accès Sécurisé |");
-        builder.setMessage("Quelle est votre prof d'Android ?");
-
-        // 2. Création du champ de saisie (EditText) qui sera dans le pop-up
-        final android.widget.EditText input = new android.widget.EditText(this);
-        input.setHint("Votre réponse");
-        builder.setView(input);
-
-        // 3. Définition du bouton "Valider" et de son action
-        builder.setPositiveButton("Valider", (dialog, which) -> {
-            String userAnswer = input.getText().toString();
-
-            try {
-                // 4. Lecture de la réponse secrète depuis les EncryptedSharedPreferences
-                String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
-                SharedPreferences settings = EncryptedSharedPreferences.create(
-                        Screen_Parametres.PREFS_NAME,
-                        masterKeyAlias,
-                        this,
-                        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-                        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-                );
-
-                String correctAnswer = settings.getString(Screen_Parametres.SECRET_ANSWER_KEY, "");
-
-                // 5. Vérification de la réponse
-                // On vérifie que la réponse sauvegardée n'est pas vide ET qu'elle correspond à celle de l'utilisateur
-                if (!correctAnswer.isEmpty() && userAnswer.equals(correctAnswer)) {
-                    // Bonne réponse : on lance l'écran des notes
-                    startActivity(new Intent(MainActivity.this, Screen_NoteBloc.class));
-                } else {
-                    // Mauvaise réponse : on affiche un message d'erreur
-                    Toast.makeText(MainActivity.this, "Mauvaise réponse", Toast.LENGTH_SHORT).show();
-                }
-
-            } catch (GeneralSecurityException | IOException e) {
-                e.printStackTrace();
-                Toast.makeText(this, "Erreur de sécurité, impossible de vérifier la réponse", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // 6. Définition du bouton "Annuler"
-        builder.setNegativeButton("Annuler", (dialog, which) -> dialog.cancel());
-
-        // 7. Affichage de la boîte de dialogue
-        builder.show();
-    }
-
-    private void PasswordVerification(String DonneesCalcul){
+    private void NewPassword(String NewPassword){
         try {
             String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
-            SharedPreferences settings = EncryptedSharedPreferences.create(
+            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(
                     Screen_Parametres.PREFS_NAME,
                     masterKeyAlias,
                     this,
@@ -137,47 +79,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
             );
 
-            String correctAnswer = settings.getString(Screen_Parametres.PASSWORD_KEY, "");
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(Screen_Parametres.PASSWORD_KEY, NewPassword);
+            editor.apply();
+            Toast.makeText(this, "Nouveau mot de passe enregistré !", Toast.LENGTH_SHORT).show();
+            finish();
 
-            // 5. Vérification de la réponse
-            // On vérifie que la réponse sauvegardée n'est pas vide ET qu'elle correspond à celle de l'utilisateur
-            if (!correctAnswer.isEmpty() && DonneesCalcul.equals(correctAnswer)) {
-                // Bonne réponse : on lance l'écran des notes
-                startActivity(new Intent(MainActivity.this, Screen_NoteBloc.class));
-            }
         } catch (GeneralSecurityException | IOException e) {
             // This block will run if an error occurs while trying to access the encrypted data.
             e.printStackTrace();
             Toast.makeText(this, "Security Error: Could not verify password.", Toast.LENGTH_SHORT).show();
         }
-
     }
     void assignationId(MaterialButton btn, int id){
         btn = findViewById(id);
-        if (id == R.id.button_C) {
-            btn.setOnClickListener(this); // On garde le OnClickListener pour le clic court (fonction "Clear")
-            btn.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, android.view.MotionEvent event) {
-                    switch (event.getAction()) {
-                        case android.view.MotionEvent.ACTION_DOWN:
-                            // L'utilisateur a posé son doigt sur le bouton.
-                            // On programme l'action pour dans 5 secondes.
-                            longPressHandler.postDelayed(longPressRunnable, 5000); // 5 secondes
-                            break;
-                        case android.view.MotionEvent.ACTION_UP:
-                        case android.view.MotionEvent.ACTION_CANCEL:
-                            // L'utilisateur a relevé son doigt OU son geste a été annulé.
-                            // On annule l'action qui était programmée.
-                            longPressHandler.removeCallbacks(longPressRunnable);
-                            break;
-                    }
-                    // On retourne 'false' pour indiquer qu'on n'a pas "consommé" l'événement.
-                    // Cela permet au OnClickListener normal de fonctionner si le clic est court.
-                    return false;
-                }
-            });
-        }else btn.setOnClickListener(this);
+        btn.setOnClickListener(this);
     }
 
     @Override
@@ -197,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         else if(buttonText.equals("=")){
             afficheurCalcul.setText(afficheurResultat.getText());
-            PasswordVerification(DonneesCalcul);
+            NewPassword(DonneesCalcul);
             return;
         }
 
