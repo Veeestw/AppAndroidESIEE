@@ -34,132 +34,143 @@ public class PasswordModif extends AppCompatActivity implements View.OnClickList
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+    protected void onCreate(Bundle savedInstanceState) {//Lors de la creation de l'activité
+        super.onCreate(savedInstanceState);//Execution du code de la fonction mere
+        setContentView(R.layout.activity_main);//On recupere l'interface graphique de activity_main
+
+
+        EdgeToEdge.enable(this);//Activation du mode "bord a bord" prendre tout l'ecran disponible
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {//Permet gerer l'affiche de l'app en prenant en compte les barres d'etats
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            afficheurResultat = findViewById(R.id.afficheur_resultat);
-            afficheurCalcul = findViewById(R.id.afficheur_calcul);
 
-            assignationId(button0,R.id.button_0);
-            assignationId(button1,R.id.button_1);
-            assignationId(button2,R.id.button_2);
-            assignationId(button3,R.id.button_3);
-            assignationId(button4,R.id.button_4);
-            assignationId(button5,R.id.button_5);
-            assignationId(button6,R.id.button_6);
-            assignationId(button7,R.id.button_7);
-            assignationId(button8,R.id.button_8);
-            assignationId(button9,R.id.button_9);
-            assignationId(buttonDiv,R.id.button_div);
-            assignationId(buttonMult,R.id.button_mult);
-            assignationId(buttonSous,R.id.button_sous);
-            assignationId(buttonAdd,R.id.button_add);
-            assignationId(buttonPoint,R.id.button_point);
-            assignationId(buttonC,R.id.button_C);
-            assignationId(buttonParentheseG,R.id.button_parentheseG);
-            assignationId(buttonParentheseD,R.id.button_parentheseD);
-            assignationId(buttonRetour,R.id.button_retour);
-            assignationId(buttonEgal,R.id.button_egal);
+
+            afficheurResultat = findViewById(R.id.afficheur_resultat);//On fait le lien entre la variable afficheurResultat et le TextView afficheur_resultat de l'interface
+            afficheurCalcul = findViewById(R.id.afficheur_calcul);//On fait le lien entre la variable afficheurCalcul et le TextView afficheur_calcul de l'interface
+
+            assignationId(button0,R.id.button_0);//On fait le lien entre la variable button0 et le bouton button_0 de l'interface
+            assignationId(button1,R.id.button_1);//On fait le lien entre la variable button1 et le bouton button_1 de l'interface
+            assignationId(button2,R.id.button_2);//On fait le lien entre la variable button2 et le bouton button_2 de l'interface
+            assignationId(button3,R.id.button_3);//On fait le lien entre la variable button3 et le bouton button_3 de l'interface
+            assignationId(button4,R.id.button_4);//On fait le lien entre la variable button4 et le bouton button_4 de l'interface
+            assignationId(button5,R.id.button_5);//On fait le lien entre la variable button5 et le bouton button_5 de l'interface
+            assignationId(button6,R.id.button_6);//On fait le lien entre la variable button6 et le bouton button_6 de l'interface
+            assignationId(button7,R.id.button_7);//On fait le lien entre la variable button7 et le bouton button_7 de l'interface
+            assignationId(button8,R.id.button_8);//On fait le lien entre la variable button8 et le bouton button_8 de l'interface
+            assignationId(button9,R.id.button_9);//On fait le lien entre la variable button9 et le bouton button_9 de l'interface
+            assignationId(buttonDiv,R.id.button_div);//On fait le lien entre la variable buttonDiv et le bouton button_div de l'interface
+            assignationId(buttonMult,R.id.button_mult);//On fait le lien entre la variable buttonMult et le bouton button_mult de l'interface
+            assignationId(buttonSous,R.id.button_sous);//On fait le lien entre la variable buttonSous et le bouton button_sous de l'interface
+            assignationId(buttonAdd,R.id.button_add);//On fait le lien entre la variable buttonAdd et le bouton button_add de l'interface
+            assignationId(buttonPoint,R.id.button_point);//On fait le lien entre la variable buttonPoint et le bouton button_point de l'interface
+            assignationId(buttonC,R.id.button_C);//On fait le lien entre la variable buttonC et le bouton button_C de l'interface
+            assignationId(buttonParentheseG,R.id.button_parentheseG);//On fait le lien entre la variable buttonParentheseG et le bouton button_parentheseG de l'interface
+            assignationId(buttonParentheseD,R.id.button_parentheseD);//On fait le lien entre la variable buttonParentheseD et le bouton button_parentheseD de l'interface
+            assignationId(buttonRetour,R.id.button_retour);//On fait le lien entre la variable buttonRetour et le bouton button_retour de l'interface
+            assignationId(buttonEgal,R.id.button_egal);//On fait le lien entre la variable buttonEgal et le bouton button_egal de l'interface
             return insets;
         });
     }
 
-    private void NewPassword(String NewPassword){
+    private void NewPassword(String NewPassword){//Fonction qui permet de changer le mot de passe
         try {
-            String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
-            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(
-                    Screen_Parametres.PREFS_NAME,
-                    masterKeyAlias,
-                    this,
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-                    EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+            String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);//On crée une clé de chiffrement principale
+            SharedPreferences FichierSecuriseVar = EncryptedSharedPreferences.create(//On creer ou on ouvre (si il existe deja) le fichier securise que l'on va manipuler dans le code avec la variable FichierSecuriseVar
+                    Screen_Parametres.PREFS_NAME,//Nom du fichier
+                    masterKeyAlias,//Clé de chiffrement principale
+                    this,//Context
+                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,//Méthode de chiffrement de la clé
+                    EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM//Méthode de chiffrement des valeurs
             );
 
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(Screen_Parametres.PASSWORD_KEY, NewPassword);
-            editor.apply();
-            Toast.makeText(this, "Nouveau mot de passe enregistré !", Toast.LENGTH_SHORT).show();
-            finish();
+            SharedPreferences.Editor editor = FichierSecuriseVar.edit();//On creer un objet editeur qui a les droits pour modifier le fichier securise
+            editor.putString(Screen_Parametres.PASSWORD_KEY, NewPassword);//On sauvegarde le mot de passe dans le fichier securise dans l'emplacement PASSWORD_KEY
+            editor.apply();//On applique les modifications du fichier securise
+            Toast.makeText(this, "Nouveau mot de passe enregistré !", Toast.LENGTH_SHORT).show();//Affichage d'un message de confirmation
+            finish();//On ferme l'activité
 
-        } catch (GeneralSecurityException | IOException e) {
-            // This block will run if an error occurs while trying to access the encrypted data.
-            e.printStackTrace();
-            Toast.makeText(this, "Security Error: Could not verify password.", Toast.LENGTH_SHORT).show();
+        } catch (GeneralSecurityException | IOException e) {//Si une erreur a lieu
+            e.printStackTrace();//On affiche l'erreur dans le log cat
+            Toast.makeText(this, "Security Error: Could not verify password.", Toast.LENGTH_SHORT).show();//Affichage d'un message d'erreur
         }
     }
-    void assignationId(MaterialButton btn, int id){
-        btn = findViewById(id);
-        btn.setOnClickListener(this);
+    void assignationId(MaterialButton btn, int id){//Fonction qui permet de faire le lien entre des variables et les boutons de l'interface et de mettre un listener dessus
+        btn = findViewById(id);//On fait le lien entre la variable btn et le bouton de l'interface
+        btn.setOnClickListener(this);//On ajoute un listener sur le bouton
     }
 
     @Override
-    public void onClick(View v) {
-        MaterialButton button = (MaterialButton) v;
-        String buttonText = button.getText().toString();
-        String DonneesCalcul = afficheurCalcul.getText().toString();
+    public void onClick(View v) {//Fonction qui est appelee lorsque l'on clique sur un bouton
+        MaterialButton button = (MaterialButton) v;//On cast v pour s'assurer que c'est bien un bouton et on recupere le bouton cliqué
+        String buttonText = button.getText().toString();//On recupere le texte du bouton cliqué au format string
+        String DonneesCalcul = afficheurCalcul.getText().toString();//On recupere le texte du TextView afficheur_calcul (l'afficheur du calcul en cours) au format string
 
-        if(buttonText.equals("C")){
-            afficheurCalcul.setText("");
-            afficheurResultat.setText("0");
-            return;
+        if(buttonText.equals("C")){//Si on clique sur le bouton C
+            afficheurCalcul.setText("");//On efface le calcul en cours
+            afficheurResultat.setText("0");//On passe le resultat a 0
+            return;//On quitte la fonction
         }
-        else if(buttonText.equals("×")){
-            DonneesCalcul = DonneesCalcul + "*";
-        }
-
-        else if(buttonText.equals("=")){
-            afficheurCalcul.setText(afficheurResultat.getText());
-            NewPassword(DonneesCalcul);
-            return;
+        else if(buttonText.equals("×")){//Si on clique sur le bouton ×
+            DonneesCalcul = DonneesCalcul + "*";//On ajoute le symbole * a la chaine de caractere qui correspond au calcul en cours
         }
 
-        else if(buttonText.equals(" ")){
-            DonneesCalcul = DonneesCalcul.substring(0,DonneesCalcul.length()-1);
+        else if(buttonText.equals("=")){//Si on clique sur le bouton =
+            afficheurCalcul.setText(afficheurResultat.getText());//On passe le resultat du calcul en cours a l'afficheur du calcul
+            NewPassword(DonneesCalcul);//On appelle la fonction NewPassword qui permet de changer le mot de passe
+            return;//On quitte la fonction
+        }
+
+        else if(buttonText.equals(" ")){//Si on clique sur le bouton retour
+            if(!DonneesCalcul.isEmpty()){//Si le calcul n'est pas vide
+                DonneesCalcul = DonneesCalcul.substring(0,DonneesCalcul.length()-1);//On supprime le dernier caractere de la chaine de caractere correspondant au calcul en cours
+            }
+            else{//Si le calcul est vide
+                afficheurCalcul.setText(""); // On veut que l'afficheur du haut soit vide
+                afficheurResultat.setText("0"); // Et celui du bas à 0
+                return;//On quitte la fonction pour eviter de faire tout ce qui suit et notamment demander a l'afficheur d'afficher du "rien"
+            }
         }else {
-            DonneesCalcul = DonneesCalcul + buttonText;
+            DonneesCalcul = DonneesCalcul + buttonText;//Pour tout les autres cas on ajoute le texte du bouton cliqué a la chaine de caractere correspondant au calcul en cours
         }
-        afficheurCalcul.setText(DonneesCalcul);
-        String ResultatFinal = Resultats(DonneesCalcul);
-        if(!ResultatFinal.equals("Err")){
-            afficheurResultat.setText(ResultatFinal);
+        afficheurCalcul.setText(DonneesCalcul);//On affiche le calcul en cours sur l'afficheur du calcul
+        String ResultatFinal = Resultats(DonneesCalcul);//On appelle la fonction Resultats qui permet de calculer le resultat du calcul en cours
+        if(!ResultatFinal.equals("Err")){//Si le calcul n'est pas en erreur
+            afficheurResultat.setText(ResultatFinal);//On affiche le resultat du calcul en cours sur l'afficheur du resultat
         }
     }
 
-    String Resultats(String donnee){
+    String Resultats(String donnee){//Fonction qui permet de calculer le resultat du calcul
         try {
-            Context context = Context.enter();
-            context.setOptimizationLevel(-1);
-            Scriptable scriptable = context.initStandardObjects();
-            String donnee_final = donnee.replaceAll("(?<=[\\+\\-\\*\\/\\(\\s]|^)0+(?=[1-9])", "");
+            Context context = Context.enter();//Context necessaire pour l'activation du JavaScript
+            context.setOptimizationLevel(-1);//Desactivation de l'optimisation du JavaScript (pour les perf)
+            Scriptable scriptable = context.initStandardObjects();//Activation du JavaScript
+            donnee = donnee.replaceAll("0+\\.", "0.");//Si on trouve plusieur 0 (0+) suivis par le caractere point (\\.) on les remplace par 0.
+            String donnee_final = donnee.replaceAll("(?<=[\\+\\-\\*\\/\\(\\s]|^)0+(?=[1-9])", "");//Si on trouve un ou plusieurs 0 de suite (0+) qui sont places apres un operature : +;-;*;/;(;esp;tab ([\+\-\*\/\(\s]) OU que l'on est au depuis de la chaine de caractere (|^) ET qui sont suivis par un chiffre de 1 a 9 ((?=[1-9]))
 
-            if (donnee_final.startsWith("00")) {
-                donnee_final = donnee_final.substring(2);
+            if (donnee_final.startsWith("00")) {//Si le calcul commence par 00
+                donnee_final = donnee_final.substring(2);//On supprime les deux premiers caracteres (donc les deux 0)
             }
 
-            if(donnee_final.isEmpty()){
-                donnee_final = "0";
+            if(donnee_final.isEmpty()){//Si le calcul est vide
+                donnee_final = "0";//le resultat est 0
             }
 
-            if (donnee_final.startsWith(".")) {
-                donnee_final = "0" + donnee_final;
+            if (donnee_final.startsWith(".")) {//Si le calcul commence par .
+                donnee_final = "0" + donnee_final;//On ajoute un 0 devant
             }
 
-            String Resultat = context.evaluateString(scriptable,  donnee_final,"Javascript",1,null).toString();
-            if (Resultat.endsWith(".0")){
-                Resultat=Resultat.replace(".0","");
+            String Resultat = context.evaluateString(scriptable,  donnee_final,"Javascript",1,null).toString();//Fonction qui permet de calculer le resultat du calcul en cours grace a un environnement JavaScript
+            if (Resultat.endsWith(".0")){//Si le resultat se termine par .0
+                Resultat=Resultat.replace(".0","");//On supprime le .0
             }
-            Log.d("DEBUG", "donnee = " + donnee);
-            Log.d("DEBUG", "donnee_final = " + donnee_final);
-            Log.d("DEBUG", "Resultat = " + Resultat);
-            return Resultat;
-        }catch (Exception e){
-            return "Err";
+            Log.d("DEBUG", "donnee = " + donnee);//Log de debug
+            Log.d("DEBUG", "donnee_final = " + donnee_final);//Log de debug
+            Log.d("DEBUG", "Resultat = " + Resultat);//Log de debug
+            return Resultat;//On retourne le resultat
+        }catch (Exception e){//Si une erreur a lieu
+            e.printStackTrace();//On affiche l'erreur dans le log cat
+            return "Err";//On retourne Err
         }
-
 
     }
 }

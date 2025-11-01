@@ -7,18 +7,16 @@ import io.realm.RealmSchema;
 public class RealmMigrations implements RealmMigration {
 
     @Override
-    public void migrate(final DynamicRealm realm, long oldVersion, long newVersion) {
-        // On récupère le schéma de la base de données
-        RealmSchema schema = realm.getSchema();
+    public void migrate(final DynamicRealm realm, long oldVersion, long newVersion) {//Fonction qui permet de faire une mise a niveau de la base de donnée si il y eu des changements
+        RealmSchema schema = realm.getSchema();// On récupère le schéma actuel de la base de données, c'est-à-dire la description de ses tables et colonnes
 
-        // Le code pour les futures migrations sera placé ici.
-        // Par exemple, si tu passes un jour de la version 2 à 3, tu ajouteras
-        // une condition comme celle-ci :
-        //
-        // if (oldVersion == 2) {
-        //     // Faire des changements sur le schéma
-        //     // schema.get("NomDeLaClasse").addField("nouveauChamp", String.class);
+        // EXEMPLE POUR LE FUTUR : Si on passait à la version 2 et qu'on ajoutait un champ "couleur" à la classe Note.
+        // if (oldVersion == 1) {
+        //     schema.get("Note")
+        //           .addField("color", String.class);
         //     oldVersion++;
         // }
+
+
     }
 }

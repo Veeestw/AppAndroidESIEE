@@ -20,7 +20,7 @@ public class Note extends RealmObject {//En faisant extends RealmObject, Note de
 
     public String getTitle() {
         return title;
-    } //Fonction de recuperation du titre de la note
+    }
 
     public void setTitle(String title) {//Fonction de modification du titre de la note
         this.title = title;
