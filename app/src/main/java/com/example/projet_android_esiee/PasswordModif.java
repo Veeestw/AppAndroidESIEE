@@ -120,7 +120,7 @@ public class PasswordModif extends AppCompatActivity implements View.OnClickList
             return;//On quitte la fonction
         }
 
-        else if(buttonText.equals(" ")){//Si on clique sur le bouton retour
+        else if(v.getId()==R.id.button_retour){//Si on clique sur le bouton retour (ici on utilise l'id car c'est un bouton sans texte avec uniquement une icone a l'interieur)
             if(!DonneesCalcul.isEmpty()){//Si le calcul n'est pas vide
                 DonneesCalcul = DonneesCalcul.substring(0,DonneesCalcul.length()-1);//On supprime le dernier caractere de la chaine de caractere correspondant au calcul en cours
             }

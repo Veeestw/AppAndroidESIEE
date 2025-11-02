@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
@@ -23,7 +24,7 @@ public class Screen_NoteBloc extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);//Execution du code de la fonction mere
         setContentView(R.layout.activity_screen_note_bloc);//On recupere l'interface graphique de screen_note_bloc
-        MaterialButton addNoteBtn = findViewById(R.id.addnewbtn);//On fait le lien entre la variable addNoteBtn et le bouton addnewbtn de l'interface
+        FloatingActionButton addNoteBtn = findViewById(R.id.addnewbtn);//On fait le lien entre la variable addNoteBtn et le bouton addnewbtn de l'interface
         MaterialButton retourBtn = findViewById(R.id.RetourcalculatriceBTN);//On fait le lien entre la variable retourBtn et le bouton RetourcalculatriceBTN de l'interface
         MaterialButton ParametresBtn = findViewById(R.id.ParametresBTN);//On fait le lien entre la variable ParametresBtn et le bouton ParametresBTN de l'interface
         RecyclerView recyclerView = findViewById(R.id.recyclerview);//On fait le lien entre la variable recyclerView et le RecyclerView recyclerview de l'interface

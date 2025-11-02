@@ -1,118 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white"
+    android:background="?android:attr/colorBackground"
     tools:context=".Screen_Parametres">
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:text="Retour"
-        android:layout_margin="5dp"
-        android:layout_gravity="right"
-        android:id="@+id/RetourParamToNoteBTN"
-        android:backgroundTint="#7C7E79"
-        />
-
-    <TextView
+    <!-- Barre de titre -->
+    <RelativeLayout
+        android:id="@+id/top_bar_params"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/TitleParam"
-        android:text="Paramètre"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:layout_margin="20dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:layout_margin="10dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/TitleTextView"
-            android:text="Qui est votre prof d'android ? "
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:layout_margin="20dp"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/SecretAnswer"
-            android:hint="Votre Réponse"
-            android:background="#D9D2D2"
-            android:padding="10dp"
-            android:maxLines="1"
-            android:layout_margin="10dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:layout_margin="10dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/TextPassword"
-            android:text="Votre mot de passe :"
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:layout_margin="20dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/AfficheurPassword"
-            android:text="eeeeee"
-            android:textColor="@color/black"
-            android:background="#D7D0D0"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:textStyle="bold"/>
+        android:padding="16dp">
 
         <com.google.android.material.button.MaterialButton
-            android:layout_width="110dp"
-            android:layout_height="40dp"
-            android:text="Modifier"
-            android:layout_margin="5dp"
-            android:id="@+id/ModifierBTN"
-            android:backgroundTint="#7C7E79"
-            android:layout_gravity="center"
-            />
+            android:id="@+id/RetourParamToNoteBTN"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            app:icon="@drawable/outline_arrow_back_24"
+            app:iconSize="35dp"
+            app:iconTint="?attr/colorOnBackground" />
 
+        <TextView
+            android:id="@+id/TitleParam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Paramètres"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
-    </LinearLayout>
+    <!-- Contenu principal -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/top_bar_params"
+        android:layout_above="@id/ValidateSetupBTN"
+        android:clipToPadding="false"
+        android:padding="8dp">
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <!-- Carte pour la question secrète -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="?attr/colorSurface"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                android:layout_margin="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/TitleTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Qui est votre prof d'Android ?"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:hint="Votre Réponse">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/SecretAnswer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:inputType="text"
+                            android:textColor="?attr/colorOnSurface" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Carte pour le mot de passe -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="?attr/colorSurface"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                android:layout_margin="8dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/TextPassword"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:text="Mot de passe"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/AfficheurPassword"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_toStartOf="@id/ModifierBTN"
+                        android:layout_toEndOf="@id/TextPassword"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:ellipsize="end"
+                        android:gravity="end"
+                        android:maxLines="1"
+                        android:text="••••••••••••••••••••••••"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="16sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/ModifierBTN"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:text="Modifier" />
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bouton Valider pour le Setup -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/ValidateSetupBTN"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:padding="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/accent_blue"
+        android:paddingVertical="14dp"
         android:text="Valider et Démarrer"
-        android:textSize="18sp"
-        android:visibility="gone"/>
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:visibility="gone"
+        tools:visibility="visible"/>
 
-</LinearLayout>
+</RelativeLayout>
+    

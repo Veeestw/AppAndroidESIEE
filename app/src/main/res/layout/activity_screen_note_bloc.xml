@@ -5,53 +5,71 @@
     android:id="@+id/AffNoteBloc"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:padding="10dp"
+    android:background="?android:attr/colorBackground"
     tools:context=".Screen_NoteBloc">
 
-
-    <TextView
-        android:layout_width="wrap_content"
+    <!-- Barre de titre -->
+    <RelativeLayout
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/Notetitle"
-        android:text="NOTES"
-        android:textSize="20sp"
-        android:layout_margin="3dp"
-        android:textColor="@color/black"
-        android:textStyle="bold" />
+        android:padding="16dp">
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:text="Retour"
-        android:layout_margin="5dp"
-        android:layout_alignParentRight="true"
-        android:id="@+id/RetourcalculatriceBTN"
-        android:backgroundTint="#7C7E79"
-        />
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="130dp"
-        android:layout_height="40dp"
-        android:text="Parametres"
-        android:layout_margin="10dp"
-        android:layout_toRightOf="@id/Notetitle"
-        android:id="@+id/ParametresBTN"
-        android:backgroundTint="#7C7E79"
-        />
+        <TextView
+            android:id="@+id/Notetitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Notes"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/ParametresBTN"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            app:icon="@drawable/ic_settings"
+            app:iconSize="25dp"
+            app:iconTint="?attr/colorOnBackground" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/RetourcalculatriceBTN"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/ParametresBTN"
+            android:layout_centerVertical="true"
+            app:icon="@drawable/ic_calculator"
+            app:iconSize="25dp"
+            app:iconTint="?attr/colorOnBackground" />
+
+    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recyclerview"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/Notetitle"/>
+        android:layout_below="@id/top_bar"
+        android:layout_above="@id/addnewbtn"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:clipToPadding="false"/>
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Ajouter une note"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addnewbtn"
-        android:backgroundTint="#7C7E79"
-        android:layout_alignParentBottom="true"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/accent_blue"
+        app:srcCompat="@drawable/ic_add"
+        app:tint="@color/white"
+        android:contentDescription="Ajouter une note"/>
 
 </RelativeLayout>
+    

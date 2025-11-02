@@ -1,65 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:orientation="vertical"
-android:background="@color/white"
+android:layout_height="match_parent"
+android:background="?android:attr/colorBackground"
 tools:context=".EditNoteActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/TitleTextView"
-        android:text="Modifier une note"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:layout_margin="20dp"/>
+<!-- Barre de titre avec bouton retour et titre de la page -->
+<RelativeLayout
+    android:id="@+id/top_bar_add_note"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
     <com.google.android.material.button.MaterialButton
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:text="Retour"
-        android:layout_margin="5dp"
-        android:layout_gravity="center"
         android:id="@+id/RetourEditToNoteBTN"
-        android:backgroundTint="@color/black"
-        />
-    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.IconButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Modifier la note"
-        android:layout_gravity="center"
-        android:id="@+id/update_note_btn"
-        android:backgroundTint="@color/black"/>
+        android:layout_centerVertical="true"
+        app:icon="@drawable/outline_arrow_back_24"
+        app:iconSize="35dp"
+        app:iconTint="?attr/colorOnBackground" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/TitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Modifier une note"
+        android:textColor="?attr/colorOnBackground"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/top_bar_add_note"
+    android:layout_above="@id/update_note_btn"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/edit_title_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:layout_margin="10dp"
-        android:orientation="vertical">
+        android:background="@android:color/transparent"
+        android:hint="Titre"
+        android:paddingVertical="12dp"
+        android:textColor="?attr/colorOnBackground"
+        android:textColorHint="@color/dark_text_secondary"
+        android:textSize="24sp"
+        android:maxLines="1"
+        android:inputType="text"
+        android:textStyle="bold" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/edit_title_input"
-            android:hint="Title"
-            android:background="#D9D2D2"
-            android:padding="10dp"
-            android:maxLines="1"
-            android:layout_margin="10dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="8dp"
+        android:background="?attr/colorOutline" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/edit_description_input"
-            android:hint="Description"
-            android:background="#D9D2D2"
-            android:padding="10dp"
-            android:layout_margin="10dp"/>
-    </LinearLayout>
+    <EditText
+        android:id="@+id/edit_description_input"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:gravity="top"
+        android:hint="Commencez à écrire..."
+        android:paddingVertical="12dp"
+        android:textColor="?attr/colorOnBackground"
+        android:textColorHint="@color/dark_text_secondary"
+        android:textSize="18sp" />
 
 </LinearLayout>
+
+<!-- Bouton de sauvegarde en bas -->
+<com.google.android.material.button.MaterialButton
+    android:id="@+id/update_note_btn"
+    style="@style/Widget.Material3.Button.ElevatedButton"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_margin="16dp"
+    android:backgroundTint="@color/accent_blue"
+    android:paddingVertical="14dp"
+    android:text="Sauvegarder"
+    android:textColor="@color/white"
+    android:textSize="16sp" />
+
+</RelativeLayout>

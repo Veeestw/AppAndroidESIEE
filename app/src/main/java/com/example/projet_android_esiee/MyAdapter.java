@@ -2,6 +2,7 @@ package com.example.projet_android_esiee;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -40,10 +41,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             return; //On annule l'action
         }
 
-        holder.titleOutput.setText(note.getTitle());//On remplis les champs "TitleOutput" de l'interface avec les informations de la note
-        holder.descriptionOutput.setText(note.getDescription());//On remplis les champs "DescriptionOutput" de l'interface avec les informations de la note
+        holder.titleOutput.setText(note.getTitle());//On rempli les champs "TitleOutput" de l'interface avec les informations de la note
+        holder.descriptionOutput.setText(note.getDescription());//On rempli les champs "DescriptionOutput" de l'interface avec les informations de la note
         String formatedDate = DateFormat.getDateTimeInstance().format(note.getCreatedTime());//On recupere la date de creation de la note formatee
-        holder.dateOutput.setText(formatedDate);//On remplis les champs "DateOutput" de l'interface avec les informations de la note
+        holder.dateOutput.setText(formatedDate);//On rempli les champs "DateOutput" de l'interface avec les informations de la note
 
         holder.itemView.setOnClickListener(v -> {//Si on clique sur un item de la liste
             Intent intent = new Intent(context, EditNoteActivity.class);//On se prepare au changement d'activite
@@ -53,24 +54,36 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         holder.deleteButton.setOnClickListener(v -> {//On ajoute un listener sur le bouton Suppbtn
 
-            new AlertDialog.Builder(context)//On creer une boite de dialogue pour confirmer la suppression de la note
-                    .setTitle("Supprimer la note")//On definit le titre de la boite de dialogue
-                    .setMessage("Êtes-vous sûr de vouloir supprimer cette note ?")//On definit le message de la boite de dialogue
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);//Création de la boite de dialogue
+            View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_delete_note, null);//On recupere notre vue personnaliser pour la boite de dialogue
+            builder.setView(dialogView);//On definit que la boite de dialogue doit se baser sur la vue qu'on a cree
+            AlertDialog dialog = builder.create();//On cree la boite de dialogue avec notre interface
 
-                    .setPositiveButton("Oui", (dialog, which) -> {//On definit ce qu'il ce passe quand l'utilisateur clique sur oui (mais j'ai pas compris tous les arguments de la fonction)
-                        if (!realm.isClosed()) {//Si la base de donnee est ouverte
-                            realm.executeTransaction(r -> {//On commence une transaction (qui va permettre de faire des modifications sur la base de donnee)
-                                Note noteToDelete = notesList.get(position);//On recupere la note a supprimer grace a sa position
-                                if (noteToDelete != null) {//Si la note en question a ete trouvee
-                                    noteToDelete.deleteFromRealm();//On la supprime
-                                }
-                            });
-                            Toast.makeText(context, "Note supprimée", Toast.LENGTH_SHORT).show();//Affichage d'un message de confirmation
+            if (dialog.getWindow() != null) {//Si la boite de dialogue a une fenetre (securite anti crash)
+                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);//On definit la couleur de fond de la boite de dialogue en transperent pour ne voir que notre propre interface de dialogue
+            }
+
+            MaterialButton positiveButton = dialogView.findViewById(R.id.dialog_button_positive);//On recupere le bouton positive de la boite de dialogue
+            MaterialButton negativeButton = dialogView.findViewById(R.id.dialog_button_negative);//On recupere le bouton negative de la boite de dialogue
+
+
+            positiveButton.setOnClickListener(v1 -> {//Si on clique sur le bouton "Valider";
+                if (!realm.isClosed()) {//Si la base de donnee est ouverte
+                    realm.executeTransaction(r -> {//On commence une transaction (qui va permettre de faire des modifications sur la base de donnee)
+                        Note noteToDelete = notesList.get(position);//On recupere la note a supprimer grace a sa position
+                        if (noteToDelete != null) {//Si la note en question a ete trouvee
+                            noteToDelete.deleteFromRealm();//On la supprime
                         }
-                    })
-                    .setNegativeButton("Non", null)//Si l'utilisateur clique sur non alors on ferme la boite de dialogue (comportement par defaut)
+                    });
+                    Toast.makeText(context, "Note supprimée", Toast.LENGTH_SHORT).show();//Affichage d'un message de confirmation
+                }
+                dialog.dismiss();//On ferme le dialogue
+            });
 
-                    .show();//On affiche la boite de dialogue
+            negativeButton.setOnClickListener(v12 -> {//Si on clique sur le bouton "Annuler
+                dialog.dismiss();//On ferme le dialogue
+            });
+            dialog.show();//On affiche la boite de dialogue
         });
     }
 

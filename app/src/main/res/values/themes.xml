@@ -1,9 +1,65 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.Projet_Android_ESIEE" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <!-- Thème de base de l'application (Mode Clair) -->
+    <style name="Base.Theme.Calculatrice" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Couleurs primaires (utilisées par les composants Material) -->
+        <item name="colorPrimary">@color/accent_blue</item>
+        <item name="colorPrimaryVariant">@color/accent_blue</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Couleurs secondaires -->
+        <item name="colorSecondary">@color/accent_blue</item>
+        <item name="colorSecondaryVariant">@color/accent_blue</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Couleur d'arrière-plan -->
+        <item name="android:colorBackground">@color/light_background</item>
+        <!-- Couleur des surfaces (cartes, dialogues) -->
+        <item name="colorSurface">@color/light_surface</item>
+        <!-- Couleur des textes -->
+        <item name="colorOnBackground">@color/light_text_primary</item>
+        <item name="colorOnSurface">@color/light_text_primary</item>
+        <!-- Couleur d'erreur -->
+        <item name="colorError">@color/accent_red_error</item>
+        <item name="colorOnError">@color/white</item>
+
+        <!-- Couleur de la barre de statut en haut -->
+        <item name="android:statusBarColor">@color/light_background</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
-    <style name="Theme.Projet_Android_ESIEE" parent="Base.Theme.Projet_Android_ESIEE" />
+    <style name="Theme.Calculatrice" parent="Base.Theme.Calculatrice" />
+
+
+    <!-- Style de base pour TOUS les boutons de la calculatrice -->
+    <style name="CalculatorButton" parent="Widget.Material3.Button.ElevatedButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_margin">6dp</item>
+        <item name="cornerRadius">24dp</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+
+    <!-- Style pour les boutons de CHIFFRES (fond de la couleur de surface) -->
+    <style name="CalculatorButton.Digit" parent="CalculatorButton">
+        <item name="backgroundTint">?attr/colorSurface</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <!-- Style pour les boutons d'OPÉRATEURS (fond bleu accent) -->
+    <style name="CalculatorButton.Operator" parent="CalculatorButton">
+        <item name="backgroundTint">@color/accent_blue</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!-- Style pour les boutons de FONCTION (fond gris secondaire) -->
+    <style name="CalculatorButton.Function" parent="CalculatorButton">
+        <item name="backgroundTint">@color/dark_text_secondary</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+
+
+
 </resources>

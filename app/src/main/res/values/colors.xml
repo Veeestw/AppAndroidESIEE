@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- ================== THÈME CLAIR (LIGHT) ================== -->
+    <color name="light_background">#F7F7F7</color> <!-- Fond principal (gris très clair) -->
+    <color name="light_surface">#FFFFFF</color> <!-- Fond des cartes, dialogues (blanc pur) -->
+    <color name="light_text_primary">#1C1C1E</color> <!-- Texte principal (presque noir) -->
+    <color name="light_text_secondary">#6E6E73</color> <!-- Texte secondaire (gris moyen) -->
+
+    <!-- ================== THÈME SOMBRE (DARK) ================== -->
+    <color name="dark_background">#000000</color> <!-- Fond principal (noir pur pour les écrans OLED) -->
+    <color name="dark_surface">#1C1C1E</color> <!-- Fond des cartes, dialogues (gris très foncé) -->
+    <color name="dark_text_primary">#FFFFFF</color> <!-- Texte principal (blanc pur) -->
+    <color name="dark_text_secondary">#AEAEB2</color> <!-- Texte secondaire (gris clair) -->
+
+    <!-- ================== COULEURS COMMUNES ================== -->
+    <color name="accent_blue">#0A84FF</color> <!-- Bleu Apple, très dynamique et lisible -->
+    <color name="accent_red_error">#FF453A</color> <!-- Rouge Apple pour la suppression/erreur -->
+
+    <!-- Couleurs de base -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
 </resources>

@@ -3,6 +3,7 @@ package com.example.projet_android_esiee;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -81,13 +82,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void showSecretQuestionDialog() {//Fonction qui permet d'afficher la boite de dialogue de question secrète
         AlertDialog.Builder builder = new AlertDialog.Builder(this);//Création de la boite de dialogue
-        builder.setTitle("| Accès Sécurisé |");//Titre de la boite de dialogue
-        builder.setMessage("Quelle est votre prof d'Android ?");//Message de la boite de dialogue
-        final android.widget.EditText input = new android.widget.EditText(this);//Création de l'input de la boite de dialogue
-        input.setHint("Votre réponse");//On definit le texte qui sera ecrit en grisé dans le fond de l'input
-        builder.setView(input);//On definit l'input dans la boite de dialogue
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_secret_question, null);//On recupere notre vue personnaliser pour la boite de dialogue
+        builder.setView(dialogView);//On definit que la boite de dialogue doit se baser sur la vue qu'on a cree
+        AlertDialog dialog = builder.create();//On cree la boite de dialogue avec notre interface
 
-        builder.setPositiveButton("Valider", (dialog, which) -> {//Définition du bouton "Valider"
+        if (dialog.getWindow() != null) {//Si la boite de dialogue a une fenetre (securite anti crash)
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);//On definit la couleur de fond de la boite de dialogue en transperent pour ne voir que notre propre interface de dialogue
+        }
+
+        EditText input = dialogView.findViewById(R.id.dialog_input);//On recupere l'input de la boite de dialogue
+        MaterialButton positiveButton = dialogView.findViewById(R.id.dialog_button_positive);//On recupere le bouton positive de la boite de dialogue
+        MaterialButton negativeButton = dialogView.findViewById(R.id.dialog_button_negative);//On recupere le bouton negative de la boite de dialogue
+
+        positiveButton.setOnClickListener(v -> {//Si on clique sur le bouton "Valider";
             String userAnswer = input.getText().toString();//On recupere la réponse de l'utilisateur
             try {
                 String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);//Création de la clé de chiffrement principale
@@ -103,8 +110,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 if (!correctAnswer.isEmpty() && userAnswer.equals(correctAnswer)) {//On vérifie que la réponse sauvegardée n'est pas vide ET qu'elle correspond à celle de l'utilisateur
                     startActivity(new Intent(MainActivity.this, Screen_NoteBloc.class));//On lance l'écran des notes
+                    dialog.dismiss();//On ferme le dialogue
                 } else {
                     Toast.makeText(MainActivity.this, "Mauvaise réponse", Toast.LENGTH_SHORT).show();//Affichage d'un message d'erreur
+                    dialog.dismiss();//On ferme le dialogue
                 }
 
             } catch (GeneralSecurityException | IOException e) {//Si une erreur a lieu
@@ -113,8 +122,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        builder.setNegativeButton("Annuler", (dialog, which) -> dialog.cancel());//Définition du bouton "Annuler". Par defaut le negativebutton permet de fermer la boite de dialogue
-        builder.show();//On affiche la boite de dialogue
+        negativeButton.setOnClickListener(v -> {//Si on clique sur le bouton "Annuler"
+            dialog.dismiss();//On ferme le dialogue
+        });
+
+        dialog.show();//On affiche la boite de dialogue
     }
 
     private void PasswordVerification(String DonneesCalcul){//Fonction qui permet de verifier le mot de passe
@@ -182,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;//On quitte la fonction
         }
 
-        else if(buttonText.equals(" ")){//Si on clique sur le bouton retour
+        else if(v.getId()==R.id.button_retour){//Si on clique sur le bouton retour (ici on utilise l'id car c'est un bouton sans texte avec uniquement une icone a l'interieur)
             if(!DonneesCalcul.isEmpty()){//Si le calcul n'est pas vide
                 DonneesCalcul = DonneesCalcul.substring(0,DonneesCalcul.length()-1);//On supprime le dernier caractere de la chaine de caractere correspondant au calcul en cours
             }
